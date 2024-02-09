@@ -12,13 +12,12 @@ int main()
     for (unsigned short port = 1000; port < 9999; port++)
     {
         std::thread(Request::sendRequestPacket, SOCK, address, port).detach();
-        Sleep(1);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 
+    printf("\nAll ports checked! (During: %.2f secs)\n", (long double)(clock() / 1000));
     closesocket(SOCK);
     WSACleanup();
-
-    printf("\n\nAll ports checked! (During: %.2f secs)\n", (long double)(clock() / 1000));
 
     return system("pause");
 }

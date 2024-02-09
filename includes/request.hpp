@@ -5,5 +5,16 @@ class Request
 	public:
 		static SOCKET createSocketConnection(std::string address);
 		static bool   sendRequestPacket(SOCKET SOCKET_, std::string address, unsigned short port);
-		static std::string convertAddress(std::string ip);
+
+	private:
+		static std::string convertAddress(std::string address)
+		{
+			std::string result, part{};
+			std::stringstream it(address);
+
+			while (std::getline(it, part, '.'))
+				result += atoi(part.c_str());
+
+			return result;
+		}
 };
